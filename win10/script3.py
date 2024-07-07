@@ -19,7 +19,6 @@ from bunpu import *
 v1=bunpu()
 #最小値、最大値、平均値、標準偏差、生成ファイル名
 v1.bunpu_gene([10],[50],[40],[5],[100],'v1')
-
 z1=bunpu()
 z1.bunpu_gene([5],[60],[20],[5],[100],'z1')
 
@@ -46,11 +45,17 @@ w0=bunpu()
 w0=x.bunpu_add(v1)
 #グラフの生成
 w0.bunpu_graph('w0')
+#分布の平均値を出力、
+meanw0 = w0.bunpu_mean('w0mean',1,1)
+print('w0mean',meanw0)
 
 #相関係数0.5の分布間での加算
 w1=bunpu()
 w1=x.bunpu_add(v1,[100],[0.5])
 w1.bunpu_graph('w1')
+#分布の平均値を出力、
+meanw1 = w1.bunpu_mean('w1mean',1,1)
+print('w1mean',meanw1)
 
 #数式の実行
 w2 = (x+y)*v1
@@ -88,6 +93,8 @@ w1.bunpu_percent2(w3,['w2percent2','unit'],[1],1,1)
 
 z2=bunpu()
 z2.bunpu_gene([10,8],[50,60],[25,40],[4,5],[100,100],'z2')
+z2.bunpu_graph('z2')
+meanz2 = z2.bunpu_mean('z2mean',1,1)
 y2=bunpu()
 y2.bunpu_gene([30,10],[80,70],[55,40],[4,5],[100,100],'z2')
 
@@ -96,12 +103,13 @@ y2.bunpu_gene([30,10],[80,70],[55,40],[4,5],[100,100],'z2')
 #Create a distribution by specifying lines to ignore, columns to extract, and number of distribution divisions in a text file
 pos=bunpu()
 pos.bunpu_data('detectposi.csv','pos',1,[1,2],[100,100])
-
-z2.bunpu_graph('z2')
-
+meanpos = pos.bunpu_mean('posmean',1,1)
+print('posmean',meanpos)
 
 w5=pos.bunpu_add(z2)
 w5.bunpu_graph('w5')
+meanw5 = w5.bunpu_mean('w5mean',1,1)
+print('w5mean',meanw5)
 
 w6 = (pos+z2)*v1
 w6.bunpu_graph('w6')
@@ -136,9 +144,8 @@ y3.bunpu_gene([-2,-10,-5],[10,5,5],[6,-6,1],[2,2,2],[20,20,20],'y3')
 z3=bunpu()
 z3.bunpu_gene([-10,-10,-20],[-60,-50,-70],[-30,-38,-40],[2,2,2],[20,20,20],'z3')
 #breakpoint()
-mean3 = x3.bunpu_mean('x3mean',1,1)
-print('x3mean',mean3)
-
+meanx3 = x3.bunpu_mean('x3mean',1,1)
+print('x3mean',meanx3)
 meany3 = y3.bunpu_mean('y3mean',1,1)
 print('y3mean',meany3)
 
