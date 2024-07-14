@@ -72,12 +72,9 @@ I replaced the loop processing that was frequently used in the function algorith
 Simulations can be performed using a new algorithm that allows users to create multi-dimensional (1-3 dimensional) and multi-order integrals by creating function programs.(Currently, only line integrals are available, and functions for area integrals such as field analysis will be added in the future. Memory errors due to large matrices are an issue.)
 Regardless of which software you use, it is assumed that you understand Gijutsu Hyoronsha's "Baratsuki no taisyohou (How to deal with variance - Mathematics to maximize quality)".
 
-このソフトを起動すると表示窓とボタンが２つの小さなウィンドウが立ち上がります。上のボタンでスクリプトを選択して、下のボタンでスクリプトの処理が実行されます。
-実行過程はコマンドプロンプトに表示されて、結果のグラフがpingファイルとして生成されます。
-添付のスクリプトを改良することで様々なプログラムを作成できます。添付のスクリプトの関数にコメントで解説をつけたので参考にして下さい。それぞれの関数のマニュアルは、今後何らかの形で整備していきます。
+このソフトはpythonのライブラリとして機能します。Windows10ではwin10ディレクトリ、Windows11ではwin11ディレクトリのbunpu.pyをインポートしてください。それ以外のOSでは機能しません。pythonで必要なライブラリはenv.txtを参照ください。初歩的な機能は上記にリンクがあるyoutubeで公開しています。
 
-When you double-click this software to start it, a small window with a display window and two buttons will appear. Select a script using the upper button, and execute the script processing using the lower button.The execution process is displayed in the command prompt and the resulting graph is generated as a ping file.
-You can create various programs by improving the attached script. Please refer to the attached script functions as they are explained in comments. I will develop manuals for each function in some form in the future.
+This software functions as a python library. Please import bunpu.py in the win10 directory on Windows 10, and in the win11 directory on Windows 11. It do not work on other OS. Please refer to env.txt for the libraries required by python. The basic functions are available on the youtube linked above.
 
 　このソフトウェアはそのままの複製を学習や研究を目的として利用する場合に限り、フリーに使ってもらえます。
 それ以外の以下のケースなどは、ライセンス記述にあるアドレスに相談ください。
