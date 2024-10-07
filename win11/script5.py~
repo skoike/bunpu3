@@ -38,7 +38,7 @@ kfr2=bunpu()#コーナリングパワー8~deg
 kfr2.bunpu_gene([100],[500],[250],[200],[100])#case1
 tgt_s=bunpu()
 #tgt_s0=bunpu_gene([-0.3],[0.3],[0],[0.1],[20])#目標だ角deg
-kgt_s.vector_gene([0])
+tgt_s.vector_gene([0])
 lasts=bunpu()
 lasts=tgt_s
 dd0=bunpu()
