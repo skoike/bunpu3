@@ -9,6 +9,9 @@
 #Fly the ballistic launch when launching, recognize the target within 500m and track it under autonomous control
 from bunpu import *
 
+#functime=[]
+#functime.append(time.time())
+
 dlt = 0.1
 #est=15+dlt*5*(2+dlt)
 kakudo=37*np.pi/180#方位1 Aiming direction 1
@@ -20,7 +23,7 @@ vx0=vt0*np.cos(kakudo)*np.cos(houi)#m/s
 vy0=vt0*np.cos(kakudo)*np.sin(houi)#m/s
 vz0=vt0*np.sin(kakudo)#m/s
 v0=bunpu()
-ms = 5
+ms = 6
 vxmin=vx0-5
 vymin=vy0-3
 vzmin=vz0-3
@@ -99,7 +102,10 @@ shw=1
 #A loop is performed using for, but for can only be used once in a script.
 #Unlike python, the loop section is not indented, and the end of the loop is specified with forend.
 tm=130
+#event=[0,0,0,0,0]
+tmp=[0]
 for t in range(tm):
+    #event0=time.time()
     if t == 0:
         #Add vector xtg0 to distribution xy,
         y=xy.bunpu_add(xtg0)#分布xyにベクトルxtg0を加算、
@@ -108,13 +114,17 @@ for t in range(tm):
         y=ypos.bunpu_simu_add(vtary)
     #Creating an initial matrix for time series operations
     #時系列演算の初期マトリックス作成
+    #event1=time.time()
     acc,vel,pos,ypos=a0.bunpu_simu_start([v,x,y],dlt,shw)
     #integral operator,v=∫acc*dt
     #積分演算子、v=∫acc*dt
-    v=vel.bunpu_simu_integral([acc],dlt,shw)
+    #event2=time.time()
+    v=vel.bunpu_simu_integral([acc],dlt,shw)# 667.8542618751526, 
     #integral operator,x=∫x*dt
     #積分演算子、x=∫x*dt
-    x=pos.bunpu_simu_integral([v],dlt,shw)
+    #event3=time.time()
+    x=pos.bunpu_simu_integral([v],dlt,shw)#795.1211824417114,
+    eventt=time.time()
     v0=v
     a0=acc
     a=acc
@@ -135,6 +145,7 @@ for t in range(tm):
     comp = xrel.bunpu_simu_comp([dists],0)
     #制御開始フラグ
     condc = np.sum(comp)
+    #event4=time.time()
     if condc>0:
         distv = vel.bunpu_simu_dist()
         #ターゲット速度
@@ -179,16 +190,25 @@ for t in range(tm):
     cond2=cond0.astype(int)
     xrelmin=xrelmin*cond1+distx*cond2
     gname='timeline_v1'
-    simulink=x.bunpu_simu_graph(ypos,simulink,t,tm,dlt,gname,1,1)
+    simulink=x.bunpu_simu_graph(ypos,simulink,t,tm,dlt,gname,ptn=3,view=1)
     #ターゲットとの位置分布（20m以内となる逐次確率を求める）
     if t >= 110:
         x.bunpu_simu_readout()
         ypos.bunpu_simu_readout()
         tname='target_'+str(t)
-        x.bunpu_twin_graph(ypos,tname,contact0)
+        x.bunpu_twin_graph(ypos,tname,contact=contact0)
     #ターゲットの前回値
     lasty = ypos
+    #event5=time.time()
+    #event[0] += event1-event0#40.84273719787598,
+    #event[1] += event2-event1# 306.52538800239563,
+    #event[2] += event3-event2# 667.8542618751526, →cupy,daskで変わらず
+    #event[3] += event4-event3#795.1211824417114, 
+    #event[4] += event5-event4#381.02527594566345
+    #tmp[0] += eventt-event3#integralの時間704.981151342392
     #ループの終わり
-    
+#print(event)
+#print(tmp)
+print('finish')
 
 
