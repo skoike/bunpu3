@@ -48,6 +48,22 @@ English
 
 This software functions as a python library. Please import bunpu.py in the win10 directory on Windows 10, and in the win11 directory on Windows 11. It do not work on other OS. Please refer to env.txt for the libraries required by python. The basic functions are available on the youtube linked above. There are some sample scripts in the above directory, so if you run it as python script2.py, the calculation results will be generated as a graph.
 
+関数（メソッド）一覧表を作成しました。サンプルスクリプトと合わせてみることで、みなさんの用途に合わせたスクリプトを作成してください。
+
+- 関数一覧  bunpu_function.pdf
+- script2.py 1~3次元の演算例
+- script3.py 同じもの
+- script4.py 3次元ミサイル撃墜シミュレーション
+- script10.py 車間距離制御シミュレーション
+
+I have created a list of functions (methods). By combining it with the sample scripts, you can create your own scripts for your own purposes.
+
+- List of functions bunpu_function.pdf
+- script2.py 1~3 dimensional arithmetic examples
+- script3.py Same thing
+- script4.py 3D missile shoot down simulation
+- script10.py Distance control simulation
+
 　このソフトウェアはそのままの複製を学習や研究を目的として利用する場合に限り、フリーに使ってもらえます。
 それ以外の以下のケースなどは、ライセンス記述にあるアドレス(bunpu@a1.rim.or.jp)に相談ください。
 個別のニーズへの対応は、主に法人を対象として行います。
