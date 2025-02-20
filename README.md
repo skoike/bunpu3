@@ -24,7 +24,7 @@ To accurately extract information hidden in such distribution shapes, this tool 
 - https://youtu.be/_YVu-couIDc
 japanese
 - https://youtu.be/mxFAEyypfWM
-english
+English
 
 分布形状を演算することで可能になる判断指標/Judgment indices made possible by calculating distribution shapes
 
@@ -33,12 +33,14 @@ Japanese
 - https://youtu.be/I5eB3Mt8dh4
 English
 
-ソフト比較と使い方/Software comparison and how to use
-- https://www.youtube.com/watch?v=pnTQOt4HYwg
-
 バラツキの対処法、数学における位置づけ/How to deal with variance, Position in mathematics
 - https://www.youtube.com/watch?v=bGJhkxFb-2M&t=0s
+Japanse
+- https://youtu.be/nZzH2aTecHI
+English
 
+ソフト比較と使い方/Software comparison and how to use
+- https://www.youtube.com/watch?v=pnTQOt4HYwg
 バラツキの対処法、概要と応用例/How to deal with variance, overview and application examples
 - https://www.youtube.com/watch?v=YHU92qjDdDA&t=0s  
 
