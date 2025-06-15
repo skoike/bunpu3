@@ -22,7 +22,7 @@ vt0=300
 vx0=vt0*np.cos(kakudo)*np.cos(houi)#m/s
 vy0=vt0*np.cos(kakudo)*np.sin(houi)#m/s
 vz0=vt0*np.sin(kakudo)#m/s
-v0=bunpu()
+v0=Bunpu()
 ms = 6
 vxmin=vx0-5
 vymin=vy0-3
@@ -30,37 +30,37 @@ vzmin=vz0-3
 vxmax=vx0+7
 vymax=vy0+5
 vzmax=vz0+5
-v0=bunpu()
+v0=Bunpu()
 #v0.bunpu_gene([vx0-5,vy0-3,vz0-3],[vx0+7,vy0+5,vz0+5],[vx0,vy0,vz0],[1.0,0.8,0.8],[ms,ms,ms])
 v0.bunpu_gene([vxmin,vymin,vzmin],[vxmax,vymax,vzmax],[vx0,vy0,vz0],[1.0,0.8,0.8],[ms,ms,ms])
 v0.bunpu_graph('3d v')
 v0.bunpu_file('3d v')
 #x0初期位置のバラツキx0: Initial position variation
-x0=bunpu()
+x0=Bunpu()
 x0.bunpu_gene([-10,-5,-5],[5,7,5],[0,0,0],[1.0,0.8,0.5],[ms,ms,ms])
 x0.bunpu_graph('3d x0')
 #幅のない分布 Widthless distribution
-a0 = bunpu()
+a0 = Bunpu()
 a0.vector_gene([0,0,-9.8])
 #ターゲットの検出誤差 Target detection error
-xy=bunpu()
+xy=Bunpu()
 #xy.bunpu_gene([-20.0,-20.0,-30.0],[20,20,25],[0,0,0],[4.1,5.1,5.5],[5,5,5])
 xy.bunpu_gene([-20.0,-20.0,-30.0],[20,20,25],[0,0,0],[4.1,5.1,5.5],[ms,ms,ms])
 #検出誤差 detection error
 minidist0=[0]
 simulink=[]
 contact=[]
-ditect = bunpu()
+ditect = Bunpu()
 #ditect.bunpu_gene([-2,-2,-3],[2,2,2],[0,0,0],[0.3,0.2,0.5],[5,5,5])
 ditect.bunpu_gene([-2,-2,-3],[2,2,2],[0,0,0],[0.3,0.2,0.5],[ms,ms,ms])
-#a = bunpu()
+#a = Bunpu()
 a = a0
 v = v0
 x = x0
 amin = -50
 amax = 50
 fname='s_amax'
-amx=bunpu()
+amx=Bunpu()
 amx.bunpu_gene([20,30,20],[50,60,50],[30,40,30],[3,2,2],[ms,ms,ms])
 amx.bunpu_graph(fname)#34
 #ターゲットの初期位置 Initial position of target
@@ -79,7 +79,7 @@ contact0=20
 dists=500.0#制御あり
 #dists=0#制御なし
 #ターゲットの前回値
-#lastxy=bunpu()
+#lastxy=Bunpu()
 #lastxy=copy.deepcopy(xy)
 lastxy=xy
 #nv = v0.div[0]*v0.div[1]*v0.div[2]#8/14この計算ができない
@@ -102,10 +102,10 @@ shw=1
 #A loop is performed using for, but for can only be used once in a script.
 #Unlike python, the loop section is not indented, and the end of the loop is specified with forend.
 tm=130
-#event=[0,0,0,0,0]
+event=[0,0,0,0,0]
 tmp=[0]
 for t in range(tm):
-    #event0=time.time()
+    event0=time.time()
     if t == 0:
         #Add vector xtg0 to distribution xy,
         y=xy.bunpu_add(xtg0)#分布xyにベクトルxtg0を加算、
@@ -114,21 +114,21 @@ for t in range(tm):
         y=ypos.bunpu_simu_add(vtary)
     #Creating an initial matrix for time series operations
     #時系列演算の初期マトリックス作成
-    #event1=time.time()
+    event1=time.time()
     acc,vel,pos,ypos=a0.bunpu_simu_start([v,x,y],dlt,shw)
     #integral operator,v=∫acc*dt
     #積分演算子、v=∫acc*dt
-    #event2=time.time()
+    event2=time.time()
     v=vel.bunpu_simu_integral([acc],dlt,shw)# 667.8542618751526, 
     #integral operator,x=∫x*dt
     #積分演算子、x=∫x*dt
-    #event3=time.time()
+    event3=time.time()
     x=pos.bunpu_simu_integral([v],dlt,shw)#795.1211824417114,
     eventt=time.time()
     v0=v
     a0=acc
     a=acc
-    xrel=bunpu()
+    xrel=Bunpu()
     xrel=ypos.bunpu_simu_sub(x)
     filename='cont_prb'
     flagx = 0
@@ -145,28 +145,28 @@ for t in range(tm):
     comp = xrel.bunpu_simu_comp([dists],0)
     #制御開始フラグ
     condc = np.sum(comp)
-    #event4=time.time()
+    event4=time.time()
     if condc>0:
         distv = vel.bunpu_simu_dist()
         #ターゲット速度
-        #vrtualv0 = bunpu()
-        #vrtualv = bunpu()
+        #vrtualv0 = Bunpu()
+        #vrtualv = Bunpu()
         virtualv0 = ypos.bunpu_simu_sub(lasty)
         vdistx = distx/ddistx
         vdistlist = np.array([vdistx,vdistx,vdistx])
         #virtualv = virtualv0.bunpu_simu_prd(np.array([distx/ddistx,distx/ddistx,distx/ddistx]))
         virtualv = virtualv0.bunpu_simu_prd(vdistlist)
         #ターゲット仮想位置
-        #vrtualy = bunpu()
+        #vrtualy = Bunpu()
         virtualy = ypos.bunpu_simu_add(virtualv)
         #仮想ターゲットとの相対位置
-        #vrtualrelx = bunpu()
+        #vrtualrelx = Bunpu()
         virtualrelx = virtualy.bunpu_simu_sub(pos)
         vdistx = virtualrelx.bunpu_simu_dist()
         #外積による制御量演算
-        #op1 = bunpu()
+        #op1 = Bunpu()
         op1 = vel.bunpu_simu_outprod(virtualrelx)
-        #op2 = bunpu()
+        #op2 = Bunpu()
         op2 = op1.bunpu_simu_outprod(vel)
         k0 = gain/(distv*vdistx**2)
         k = np.array([k0,k0,k0])#距離が遠いほど小さい
@@ -199,16 +199,15 @@ for t in range(tm):
         x.bunpu_twin_graph(ypos,tname,contact=contact0)
     #ターゲットの前回値
     lasty = ypos
-    #event5=time.time()
-    #event[0] += event1-event0#40.84273719787598,
-    #event[1] += event2-event1# 306.52538800239563,
-    #event[2] += event3-event2# 667.8542618751526, →cupy,daskで変わらず
-    #event[3] += event4-event3#795.1211824417114, 
-    #event[4] += event5-event4#381.02527594566345
-    #tmp[0] += eventt-event3#integralの時間704.981151342392
+    event5=time.time()
+    event[0] += event1-event0
+    event[1] += event2-event1
+    event[2] += event3-event2
+    event[3] += event4-event3
+    event[4] += event5-event4
+    tmp[0] += eventt-event3
     #ループの終わり
-#print(event)
-#print(tmp)
-print('finish')
+print(event)
+print(tmp)
 
 

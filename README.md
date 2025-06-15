@@ -52,9 +52,10 @@ English
 
 # 使い方/way to use
 　
-このソフトはpythonのライブラリとして機能します。Windows10ではwin10ディレクトリ、Windows11ではwin11ディレクトリのbunpu.pyをインポートしてください。それ以外のOSでは機能しません。pythonで必要なライブラリはenv.txtを参照ください。初歩的な機能は上記にリンクがあるyoutubeで公開しています。前記ディレクトリにサンプルスクリプトがあるので、そこでpython script2.pyとして実行すると演算結果はグラフとして生成されます。
+このソフトはpythonのライブラリとして機能します。Windows10ではwin10ディレクトリ、Windows11ではwin11ディレクトリのbunpu.pyをインポートしてください。それ以外のOSでは機能しません。pythonで必要なライブラリはenv.txtを参照ください。初歩的な機能は上記にリンクがあるyoutubeで公開しています。前記ディレクトリにサンプルスクリプトがあるので、そこでpython script2.pyとして実行すると演算結果はグラフとして生成されます。pythonはenv.txtに記述したバージョンでないと動かないようです、申し訳ありませんが、同じものをインストールください。
 
 This software functions as a python library. Please import bunpu.py in the win10 directory on Windows 10, and in the win11 directory on Windows 11. It do not work on other OS. Please refer to env.txt for the libraries required by python. The basic functions are available on the youtube linked above. There are some sample scripts in the above directory, so if you run it as python script2.py, the calculation results will be generated as a graph.
+It seems that python only works with the version described in env.txt, sorry, please install the same.
 
 関数（メソッド）一覧表を作成しました。サンプルスクリプトと合わせてみることで、みなさんの用途に合わせたスクリプトを作成してください。
 
@@ -63,6 +64,7 @@ This software functions as a python library. Please import bunpu.py in the win10
 - script3.py 同じもの
 - script4.py 3次元ミサイル撃墜シミュレーション
 - script10.py 車間距離制御シミュレーション
+- script12.py 需給バランス解析
 
 I have created a list of functions (methods). By combining it with the sample scripts, you can create your own scripts for your own purposes.
 
@@ -71,6 +73,7 @@ I have created a list of functions (methods). By combining it with the sample sc
 - script3.py Same thing
 - script4.py 3D missile shoot down simulation
 - script10.py Distance control simulation
+- script12.py supply and demand balance analysis
 
 　このソフトウェアはそのままの複製を学習や研究を目的として利用する場合に限り、フリーに使ってもらえます。
 それ以外の以下のケースなどは、ライセンス記述にあるアドレス(bunpu@a1.rim.or.jp)に相談ください。
@@ -104,10 +107,12 @@ For (3) to (6) are subject a fee-based license agreement must be concluded.
 
 # 注意事項/notes
 
+　ソフトの機能向上や改善は、bunpu3のリポジトリにあるソフトで行っていきます。それ以外のbunpu,bunpu2は一部機能のメンテナンスだけ行うので、全ての機能を使う場合はbunpu3を活用ください。
 　この手法の欠点は、分布をマトリックスとして演算するので、分布を細かく分割（サンプリング）したり、多次元化や多数の分布を扱うシミュレーションを行うとメモリー使用量が膨大になってメモリーエラーを起こす可能性があります。かと言って分布の分割を荒くすると、結果の誤差が大きくなるので、エラーを起こさない範囲で分割を細かくする必要があります。このbunpu3のソフトの方がbunpu2と比べてメモリーエラーを起こしにくく大きいマトリックスを扱えます。bunpu3はpythonのライブラリとして機能するので、こちらの利用を推奨します。
 今後、様々な並列処理などを活用して大きなマトリックスを扱えるように改善したいと思いますが、みなさんもメモリーに余裕があるパソコンを利用してください。
 
-The drawback of this method is that it calculates the distribution as a matrix, so if you divide the distribution finely or perform a simulation that handles multi-dimensionality or a large number of distributions, the memory usage can become enormous, which can lead to memory errors. However, if the distribution is divided too roughly, the error in the results will increase, so it is necessary to divide it finely as long as errors do not occur. Compared to bunpu2, the bunpu3 software is less prone to memory errors and can handle larger matrices. Since bunpu3 functions as a python library, we recommend using it.
+ Software enhancements and improvements will be made to the software in the bunpu3 repository. Other than that, bunpu,bunpu2 will only maintain some functions, so please use bunpu3 if you want to use all functions.
+ The drawback of this method is that it calculates the distribution as a matrix, so if you divide the distribution finely or perform a simulation that handles multi-dimensionality or a large number of distributions, the memory usage can become enormous, which can lead to memory errors. However, if the distribution is divided too roughly, the error in the results will increase, so it is necessary to divide it finely as long as errors do not occur. Compared to bunpu2, the bunpu3 software is less prone to memory errors and can handle larger matrices. Since bunpu3 functions as a python library, we recommend using it.
 In the future, we would like to improve it so that it can handle large matrices by utilizing various parallel processing methods, but we recommend that you use a computer with plenty of memory.
 
 　ここでは“バラツキの対処法 ～品質を最大限に引き出す数学～”の出版以降に作成したソフトを公開します。
@@ -158,7 +163,7 @@ Regardless of which software you use, it is assumed that you understand Gijutsu 
 
 このソフトウェアは未完成で、改善の提案や機能拡張の協力を求めています、このソフトの改善や協力の為にに、変更、追加、結合、移植を含む派生を、利用可能な情報とともに、公開を前提として、前記アドレスにその情報提供をお願いします。その内容は公共性に基づいて本ソフトまたはそのブランチに反映させていきます。
 
-このソフトを利用・参考にする場合は、このソフトの著作権と特許出願（PCT/JP2020/034566とそれ以降の関連出願）およびその協力者における権利を尊重ください。
+このソフトを利用・参考にする場合は、このソフトの著作権と特許（7649452とそれ以降の関連出願）およびその協力者における権利を尊重ください。
 このソフトウェアの一部分を利用または参考にして、変更、追加、結合、継承や移植を含む派生を、配布または商用利用する場合は前記アドレスに相談してください。
 
 ソフトウェアは、未完成で、何らの保証もなく提供されます。
@@ -182,15 +187,15 @@ its branches and associated documentation files (the "Software"),for learning or
 
 This software is incomplete and we are seeking suggestions for improvement and cooperation in enhancements.
 For the improvement and cooperation of this software, please provide the derivation
-including modification, addition, mergers,combination, translation with available information to above address
+including modification, addition, mergers, combination, translation with available information to above address
  the assumption that it will be published.
 The contents will be reflected in this software and its branches based on public nature and my leeway.
 
 When using or referring to this software, please correspond the copyright of this software
-and the rights in patent applications(PCT/JP2020/034566 and divisional other).
+and the rights in patent applications(JP7649452 and divisional other).
 Please contact with above address if you want to use or refer to a part of this software and distribute it privately or use it for commercial purposes.
 
-The software is incomplete and is provided without warranty.Warranties here include, but are not limited to, warranties of merchantability, 
+The software is incomplete and is provided without warranty. Warranties here include, but are not limited to, warranties of merchantability, 
 fitness for a particular purpose, and non-infringement.
 The author or copyright holder of this software, whether contractual, tort, or otherwise, is due to or related to the software, or uses or uses the software.
 We shall not be liable for any claims, damages or other obligations arising from any other dealings.

@@ -11,16 +11,15 @@ dim=1
 #運動方程式
 m=1200#kg
 #駆動力最大分布と最小分布
-fmin=bunpu()
-dtdist=bunpu()
-voa = bunpu()
+fmin=Bunpu()
+dtdist=Bunpu()
+voa = Bunpu()
 
 div=100
 fmax = 1480
 fmin.bunpu_gene([-3240],[-2400],[-2800],[100],[100])
-fg=0
 #レーダー検出距離データ
-dtdist.bunpu_data('fdetect.xlsx','ditect',1,[7],[100],flag0=fg)
+dtdist.bunpu_data('fdetect.xlsx','ditect',1,[7],[100])
 #先行車速度分布
 voa.bunpu_gene([54],[64],[60],[1.5],[100])
 #初期速度
@@ -36,34 +35,34 @@ simulink2=[]
 minidist=[]
 for t in range(tm):
 
-    dtdst1,fmin1,voa1 = dtdist.bunpu_simu_start([fmin,voa],dlt=dlt0,shw=1)
+    dtdst1,fmin1,voa1 = dtdist.bunpu_simu_start([fmin,voa],dlt0,1)
     #先行車速度と位置
 
     if t == 0:
-        xo2 = bunpu()
+        xo2 = Bunpu()
         xo2.bunpu_simu_ones(voa1)
         xo1 = xo2.bunpu_simu_prd(xo0)#set 150m
         xo = xo1
         voa0 = voa1.bunpu_simu_div(3.6)
         voa1 = voa0
-    xo1=xo.bunpu_simu_integral([voa1],dlt0,shw=1)
+    xo1=xo.bunpu_simu_integral([voa1],dlt0,1)
     asmin = fmin1.bunpu_simu_div(m)#2~2.7
     asmax = fmax/m
     #目標車間距離
     if t == 0:
-        vs0 = bunpu()
+        vs0 = Bunpu()
         vs0.bunpu_simu_ones(dtdst1)
         vs = vs0.bunpu_simu_prd(vsi)
         thdvs = vs.bunpu_simu_prd(3)
     else:
-        thdvs = bunpu()
+        thdvs = Bunpu()
         thdvs = vs.bunpu_simu_prd(3)#vsの３倍 
     xrelt = thdvs.bunpu_simu_limit([3],2)#linemapのパラメータが3*vsが3mより小さいときに3mとする
     rskdst = vs.bunpu_simu_prd(rsktime)#接近危険距離の車間距離
     #車間距離
     #
     if t == 0:
-        xs = bunpu()
+        xs = Bunpu()
         xs.bunpu_simu_zeros(dtdst1)
     xrelr = xo.bunpu_simu_sub(xs)
     cond0 = dtdst1.bunpu_simu_comp([xrelr],0)#dtdst1<=xrelr の場合1、そうでなければ0
@@ -81,13 +80,14 @@ for t in range(tm):
     as0 = ass.bunpu_simu_limit(asd,1)
     as1 = as0.bunpu_simu_limit(asmax,1)
     as2 = as1.bunpu_simu_limit(asmin,2)
-    vz = bunpu()
+    vz = Bunpu()
     vz.bunpu_simu_zeros(as2)
-    as3 = bunpu()
+    as3 = Bunpu()
     as3 = vs.bunpu_simu_limit2([as2,vz,vz],0)
-    vs1=vs.bunpu_simu_integral([as3],dlt0,shw=1)
-    xs1=xs.bunpu_simu_integral([vs1],dlt0,shw=1)
-    
+    vs1=vs.bunpu_simu_integral([as3],dlt0,1)
+    xs1=xs.bunpu_simu_integral([vs1],dlt0,1)
+    #if t==55:
+    #    breakpoint()
     vs = vs1
     xs = xs1
     xo = xo1
@@ -95,14 +95,13 @@ for t in range(tm):
     fmin=fmin1
     dtdist=dtdst1
     gname = 'timeline_v'
-    simulink1=vs.bunpu_simu_graph(voa1,simulink1,t,tm,dlt0,gname,ptn=0)
+    simulink1=vs.bunpu_simu_graph(voa1,simulink1,t,tm,dlt0,gname,0)
     gname = 'timeline_relx'
-    simulink2=xrelr.bunpu_simu_graph(rskdst,simulink2,t,tm,dlt0,gname,ptn=0)
+    simulink2=xrelr.bunpu_simu_graph(rskdst,simulink2,t,tm,dlt0,gname,0)
     #車間距離が目標車間距離より小さくなる確率を求める
     rsk = xrelr.bunpu_simu_sub(rskdst)
     minidist=rsk.bunpu_simu_prb(0,minidist,0,t,tm,'toonearprb')#
     print(t)
 
     #ループの終わり
-print('finish')
 
