@@ -12,43 +12,23 @@
 バラツキを関数近似しない、現実データのありのままの形状をした分布としてとらえ、その分布を演算要素として、分布のモデル化や、分布相互の関係を確率として見える化するツールの統合環境。
 分布形状の違いによる誤差は大きく、品質や性能をスポイルする原因となっている。（詳細は下記動画を参照ください）
 そのような分布形状に隠された情報を正確に抽出するために、分布形状を正しく扱い、分布形状を考慮した様々な確率計算を提供する。
+バラツキの分布形状を演算結果に厳密に反映させる分布演算を行い、演算後の分布を使って分布間の関係を確率的に評価することができる様々な判断指標を提供します。
 
 This is an integrated environment of tools that treats variance as a distribution that has the natural shape of real data, without using function approximations, and uses that distribution as a calculation element to model the distribution and visualize the relationships between distributions as probabilities.
 Differences in distribution shapes can cause large errors, which can spoil quality and performance.(Please refer to the following video for details.)
 To accurately extract information hidden in such distribution shapes, this tool correctly handles the distribution shape and provides various probability calculations that take the distribution shape into account.
+This method performs distribution calculations that precisely reflect the shape of the variation distribution in the calculation results, and provides various judgment indices that enable probabilistic evaluation of relationships between distributions using the post-calculation distribution.
 
 # 説明動画/Explanation Video
 
-このソフトが実現する技術の内容/The technology realized by this software
+このソフトが実現する技術の内容と応用例/The technology and application examples realized by this software
 
-- https://youtu.be/_YVu-couIDc
-japanese
-- https://youtu.be/mxFAEyypfWM
-English
+- https://www.youtube.com/channel/UCjXvGHNXIkW4Ogh7Md-6M6g  Japanese
+- https://www.youtube.com/channel/UCCU5shcq5VxuYEEwVhWmXSg  English
 
-バラツキを分布として扱う最初のステップ/First step in treating variability as a distribution
-- https://youtu.be/mEFbHGVyfww
-Japanese
-- https://youtu.be/FXdJSbOxZX0
-English
+# 安易に活用するための実行ソフト/Execution software for easy use
 
-分布形状を演算することで可能になる判断指標/Judgment indices made possible by calculating distribution shapes
-
-- https://youtu.be/94UskYTy4R8
-Japanese
-- https://youtu.be/I5eB3Mt8dh4
-English
-
-バラツキの対処法、数学における位置づけ/How to deal with variance, Position in mathematics
-- https://www.youtube.com/watch?v=bGJhkxFb-2M&t=0s
-Japanse
-- https://youtu.be/nZzH2aTecHI
-English
-
-ソフト比較と使い方/Software comparison and how to use
-- https://www.youtube.com/watch?v=pnTQOt4HYwg
-バラツキの対処法、概要と応用例/How to deal with variance, overview and application examples
-- https://www.youtube.com/watch?v=YHU92qjDdDA&t=0s  
+- https://github.com/skoike/bunpu
 
 # 使い方/way to use
 　
@@ -60,18 +40,18 @@ It seems that python only works with the version described in env.txt, sorry, pl
 関数（メソッド）一覧表を作成しました。サンプルスクリプトと合わせてみることで、みなさんの用途に合わせたスクリプトを作成してください。
 
 - 関数一覧  bunpu_function.pdf
-- script2.py 1~3次元の演算例
-- script3.py 同じもの
+- script3.py 1~3次元の演算例
 - script4.py 3次元ミサイル撃墜シミュレーション
+- script5.py 車両操舵回避制御シミュレーション
 - script10.py 車間距離制御シミュレーション
 - script12.py 需給バランス解析
 
 I have created a list of functions (methods). By combining it with the sample scripts, you can create your own scripts for your own purposes.
 
 - List of functions bunpu_function.pdf
-- script2.py 1~3 dimensional arithmetic examples
-- script3.py Same thing
+- script3.py 1~3 dimensional arithmetic examples
 - script4.py 3D missile shoot down simulation
+- script5.py Vehicle Steering Avoidance Control Simulation
 - script10.py Distance control simulation
 - script12.py supply and demand balance analysis
 
